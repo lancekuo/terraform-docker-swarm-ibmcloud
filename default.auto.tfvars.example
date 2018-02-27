@@ -6,3 +6,5 @@ ssh_public_key             = "PUBLIC_KEY"
 datacenter                 = "tor01"
 vm_post_install_script_uri = "gist"
 domain                     = "test.com"
+
+manager_count              = 3
