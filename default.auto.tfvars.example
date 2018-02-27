@@ -1,0 +1,8 @@
+ibm_bmx_api_key            = "API_KEY"
+ibm_sl_username            = "USERNAME"
+ibm_sl_api_key             = "API_KET"
+
+ssh_public_key             = "PUBLIC_KEY"
+datacenter                 = "tor01"
+vm_post_install_script_uri = "gist"
+domain                     = "test.com"
