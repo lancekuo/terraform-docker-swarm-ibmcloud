@@ -2,9 +2,22 @@ ibm_bmx_api_key            = "API_KEY"
 ibm_sl_username            = "USERNAME"
 ibm_sl_api_key             = "API_KET"
 
-ssh_public_key             = "PUBLIC_KEY"
 datacenter                 = "tor01"
 vm_post_install_script_uri = "gist"
 domain                     = "test.com"
+project                    = "test-app"
 
 manager_count              = 3
+node_count                 = 4
+
+rsa_key_bastion = {
+    "public_key_path"  = "/keys/bastion.pub"
+    "private_key_path" = "/keys/bastion"
+    "aws_key_name"     = "bastion"
+}
+rsa_key_manager = {
+    "public_key_path"  = "/keys/manager.pub"
+    "private_key_path" = "/keys/manager"
+    "aws_key_name"     = "manager"
+}
+
