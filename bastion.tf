@@ -46,7 +46,7 @@ resource "ibm_compute_vm_instance" "nat" {
   local_disk                 = false
   network_speed              = 1000
   cores                      = 1
-  memory                     = 2048
+  memory                     = 1024
   post_install_script_uri    = "${var.vm_post_install_script_uri}"
   public_vlan_id             = "${data.ibm_network_vlan.public.id}"
   private_vlan_id            = "${data.ibm_network_vlan.private.id}"

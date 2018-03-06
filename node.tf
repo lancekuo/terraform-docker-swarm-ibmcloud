@@ -13,7 +13,7 @@ resource "ibm_compute_vm_instance" "node" {
   local_disk                 = false
   network_speed              = 100
   cores                      = 2
-  memory                     = 2048
+  memory                     = 16384
   post_install_script_uri    = "${var.vm_post_install_script_uri}"
   private_network_only       = true
   private_vlan_id            = "${data.ibm_network_vlan.private.id}"
