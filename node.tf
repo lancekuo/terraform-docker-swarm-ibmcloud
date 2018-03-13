@@ -37,47 +37,5 @@ resource "ibm_compute_vm_instance" "node" {
     ]
   }
 
-  provisioner "remote-exec" {
-    when = "destroy"
-
-    inline = [
-      "sudo docker node update --availability drain ${self.hostname}",
-    ]
-
-    on_failure = "continue"
-
-    connection {
-      bastion_host        = "${ibm_compute_vm_instance.bastion.ipv4_address}"
-      bastion_user        = "root"
-      bastion_private_key = "${file("${path.root}${var.rsa_key_bastion["private_key_path"]}")}"
-
-      type        = "ssh"
-      user        = "root"
-      host        = "${ibm_compute_vm_instance.manager.0.ipv4_address_private}"
-      private_key = "${file("${path.root}${var.rsa_key_manager["private_key_path"]}")}"
-    }
-  }
-
-  provisioner "remote-exec" {
-    when = "destroy"
-
-    inline = [
-      "sudo docker node rm --force ${self.hostname}",
-    ]
-
-    on_failure = "continue"
-
-    connection {
-      bastion_host        = "${ibm_compute_vm_instance.bastion.ipv4_address}"
-      bastion_user        = "root"
-      bastion_private_key = "${file("${path.root}${var.rsa_key_bastion["private_key_path"]}")}"
-
-      type        = "ssh"
-      user        = "root"
-      host        = "${ibm_compute_vm_instance.manager.0.ipv4_address_private}"
-      private_key = "${file("${path.root}${var.rsa_key_manager["private_key_path"]}")}"
-    }
-  }
-
   tags = ["${terraform.workspace}", "node", "swarm"]
 }
