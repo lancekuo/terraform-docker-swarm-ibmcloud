@@ -11,18 +11,18 @@
 #}
 
 resource "ibm_compute_ssh_key" "nat" {
-  label      = "${var.rsa_key_nat["key_name"]}.${terraform.workspace}"
+  label      = "${var.rsa_key_nat["key_name"]}.${var.project}.${terraform.workspace}"
   public_key = "${file("${path.root}${var.rsa_key_nat["public_key_path"]}")}"
 }
 
 resource "ibm_compute_ssh_key" "bastion" {
-  label      = "${var.rsa_key_bastion["key_name"]}.${terraform.workspace}"
+  label      = "${var.rsa_key_bastion["key_name"]}.${var.project}.${terraform.workspace}"
   public_key = "${file("${path.root}${var.rsa_key_bastion["public_key_path"]}")}"
 }
 
 resource "ibm_compute_vm_instance" "bastion" {
   hostname                   = "bastion"
-  domain                     = "${terraform.workspace}.${var.domain}"
+  domain                     = "${terraform.workspace}.${var.project}.${var.domain}"
   ssh_key_ids                = ["${ibm_compute_ssh_key.bastion.id}"]
   image_id                   = "${data.ibm_compute_image_template.docker_img.id}"
   datacenter                 = "${var.datacenter}"
@@ -39,7 +39,7 @@ resource "ibm_compute_vm_instance" "bastion" {
 
 resource "ibm_compute_vm_instance" "nat" {
   hostname                   = "nat"
-  domain                     = "${terraform.workspace}.${var.domain}"
+  domain                     = "${terraform.workspace}.${var.project}.${var.domain}"
   ssh_key_ids                = ["${ibm_compute_ssh_key.nat.id}"]
   image_id                   = "${data.ibm_compute_image_template.docker_img.id}"
   datacenter                 = "${var.datacenter}"

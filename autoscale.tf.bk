@@ -1,0 +1,46 @@
+resource "ibm_compute_autoscale_group" "test_scale_group" {
+    name = "test_scale_group_name"
+    regional_group = "na-can-east-1"
+    minimum_member_count = 1
+    maximum_member_count = 10
+    cooldown = 30
+    termination_policy = "CLOSEST_TO_NEXT_CHARGE"
+    # health_check = {
+    #     type = "HTTP"
+    # }
+    virtual_guest_member_template = {
+        hostname                = "manager"
+        domain                  = "${terraform.workspace}.${var.domain}"
+        ssh_key_ids             = ["${ibm_compute_ssh_key.manager.id}"]
+        image_id                = "${data.ibm_compute_image_template.docker_img.id}"
+        datacenter              = "${var.datacenter}"
+        cores                   = 2
+        memory                  = 2048
+        network_speed           = 10
+        hourly_billing          = true
+        local_disk              = false
+        post_install_script_uri = "${var.vm_post_install_script_uri}"
+    }
+# Optional fields for scale_group:
+    network_vlan_ids = ["${data.ibm_network_vlan.private.id}"]
+}
+resource "ibm_compute_autoscale_policy" "test_scale_policy" {
+    name = "test_scale_policy_name"
+    scale_type = "RELATIVE"
+    scale_amount = 1
+    cooldown = 30
+    scale_group_id = "${ibm_compute_autoscale_group.test_scale_group.id}"
+    triggers = {
+        type = "RESOURCE_USE"
+        watches = {
+                    metric = "host.cpu.percent"
+                    operator = ">"
+                    value = "80"
+                    period = 120
+        }
+    }
+    triggers = {
+        type = "REPEATING"
+        schedule = "0 1 ? * MON,WED *"
+    }
+}

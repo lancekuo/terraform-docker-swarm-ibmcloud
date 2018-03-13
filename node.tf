@@ -1,12 +1,12 @@
 resource "ibm_compute_ssh_key" "node" {
-  label      = "node.${terraform.workspace}"
+  label      = "node.${var.project}.${terraform.workspace}"
   public_key = "${file("${path.root}${var.rsa_key_node["public_key_path"]}")}"
 }
 
 resource "ibm_compute_vm_instance" "node" {
   count                      = "${var.node_count}"
   hostname                   = "node-${count.index}"
-  domain                     = "${terraform.workspace}.${var.domain}"
+  domain                     = "${terraform.workspace}.${var.project}.${var.domain}"
   ssh_key_ids                = ["${ibm_compute_ssh_key.node.id}"]
   image_id                   = "${data.ibm_compute_image_template.docker_img.id}"
   datacenter                 = "${var.datacenter}"
