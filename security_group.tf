@@ -207,6 +207,18 @@ resource "ibm_security_group_rule" "manager_pvt_e_UDP" {
 #     security_group_id    = "${ibm_security_group.manager_pvt.id}"
 #     network_interface_id = "${element(ibm_compute_vm_instance.manager.*.private_interface_id, count.index)}"
 # }
+resource "ibm_security_group" "manager_services" {
+  name        = "${var.project}.${terraform.workspace}-services"
+  description = "Open port for managers in order to access internal apps."
+}
+resource "ibm_security_group_rule" "manager_services_grafana" {
+  direction         = "ingress"
+  port_range_min    = 3000
+  port_range_max    = 3000
+  protocol          = "tcp"
+  remote_ip         = "0.0.0.0/0"
+  security_group_id = "${ibm_security_group.manager_services.id}"
+}
 
 ####
 resource "ibm_security_group" "node_pvt" {
@@ -312,3 +324,17 @@ resource "ibm_security_group_rule" "docker_gossip_2_udp" {
 #     network_interface_id = "${element(ibm_compute_vm_instance.node.*.private_interface_id, count.index)}"
 # }
 
+#### Those security groups below are for Fabric Network and it should be moved to the terraform script for Fabric one.
+resource "ibm_security_group" "fabric_network" {
+  name        = "${var.project}.${terraform.workspace}-fabric-network"
+  description = "Security group for Hyperledger Fabric network"
+}
+
+resource "ibm_security_group_rule" "zookeeper_tcp" {
+  direction         = "ingress"
+  port_range_min    = 2181
+  port_range_max    = 3888
+  protocol          = "tcp"
+  remote_group_id   = "${ibm_security_group.fabric_network.id}"
+  security_group_id = "${ibm_security_group.fabric_network.id}"
+}

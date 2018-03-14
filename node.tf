@@ -17,7 +17,7 @@ resource "ibm_compute_vm_instance" "node" {
   post_install_script_uri    = "${var.vm_post_install_script_uri}"
   private_network_only       = true
   private_vlan_id            = "${data.ibm_network_vlan.private.id}"
-  private_security_group_ids = ["${ibm_security_group.node_pvt.id}", "${ibm_security_group.docker-gossip.id}"]
+  private_security_group_ids = ["${ibm_security_group.node_pvt.id}", "${ibm_security_group.docker-gossip.id}", "${ibm_security_group.fabric_network.id}"]
 
   connection {
     bastion_host        = "${ibm_compute_vm_instance.bastion.ipv4_address}"
