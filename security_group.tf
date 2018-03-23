@@ -211,6 +211,14 @@ resource "ibm_security_group" "manager_services" {
   name        = "${var.project}.${terraform.workspace}-services"
   description = "Open port for managers in order to access internal apps."
 }
+resource "ibm_security_group_rule" "manager_services_kibana" {
+  direction         = "ingress"
+  port_range_min    = 5601
+  port_range_max    = 5601
+  protocol          = "tcp"
+  remote_ip         = "0.0.0.0/0"
+  security_group_id = "${ibm_security_group.manager_services.id}"
+}
 resource "ibm_security_group_rule" "manager_services_grafana" {
   direction         = "ingress"
   port_range_min    = 3000
