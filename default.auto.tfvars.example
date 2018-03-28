@@ -30,5 +30,40 @@ rsa_key_manager = {
 rsa_key_node= {
     "public_key_path"  = "/keys/node.pub"
     "private_key_path" = "/keys/node"
-    "key_name"     = "node"
+    "key_name"         = "node"
+}
+vlans_public = {
+    "development" = 1234
+    "production"  = 1234
+    "staging"     = 1234
+    "testnet"     = 1234
+    "trialnet"    = 1234
+}
+vlans_private = {
+    "development" = 1234
+    "production"  = 1234
+    "staging"     = 1234
+    "testnet"     = 1234
+    "trialnet"    = 1234
+}
+vlan_router_hostname_public = {
+    "development" = "fcr02a.${var.datacenter}"
+    "production"  = "fcr02a.${var.datacenter}"
+    "staging"     = "fcr01a.${var.datacenter}"
+    "testnet"     = "fcr02a.${var.datacenter}"
+    "trialnet"    = "fcr02a.${var.datacenter}"
+}
+vlan_router_hostname_private = {
+    "development" = "bcr02a.${var.datacenter}"
+    "production"  = "bcr02a.${var.datacenter}"
+    "staging"     = "bcr01a.${var.datacenter}"
+    "testnet"     = "bcr02a.${var.datacenter}"
+    "trialnet"    = "bcr02a.${var.datacenter}"
+}
+vlan_subnets_private = {
+    "development" = 123456
+    "production"  = 123456
+    "staging"     = 123456
+    "testnet"     = 123456
+    "trialnet"    = 123456
 }

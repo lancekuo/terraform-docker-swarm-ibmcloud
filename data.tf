@@ -10,9 +10,11 @@ data "ibm_compute_image_template" "docker_img" {
 }
 
 data "ibm_network_vlan" "private" {
-  name = "Private-swarm"
+  router_hostname = "${var.vlan_router_hostname_private[terraform.workspace]}.${var.datacenter}"
+  number = "${var.vlans_private[terraform.workspace]}"
 }
 
 data "ibm_network_vlan" "public" {
-  name = "Public-swarm"
+  router_hostname = "${var.vlan_router_hostname_public[terraform.workspace]}.${var.datacenter}"
+  number = "${var.vlans_public[terraform.workspace]}"
 }

@@ -27,4 +27,19 @@ variable "rsa_key_node" {
 }
 
 #stupid things start here
-variable "primary_subnet" {}
+variable "vlans_public" {
+  type = "map"
+}
+variable "vlans_private" {
+  type = "map"
+}
+variable "vlan_router_hostname_public" {
+  type = "map"
+}
+variable "vlan_router_hostname_private" {
+  type = "map"
+}
+#stupid things start here for LBaaS
+variable "vlan_subnets_private" {
+  type = "map"
+}
