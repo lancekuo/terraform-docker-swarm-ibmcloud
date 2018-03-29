@@ -10,8 +10,6 @@ project                    = "test-app"
 manager_count              = 3
 node_count                 = 4
 
-primary_subnet            = "123456"
-
 rsa_key_nat= {
     "public_key_path"  = "/keys/nat.pub"
     "private_key_path" = "/keys/nat"

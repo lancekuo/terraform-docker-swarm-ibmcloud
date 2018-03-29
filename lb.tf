@@ -1,6 +1,6 @@
 resource "ibm_lbaas" "kibana" {
     name        = "kibana.${var.project}.${terraform.workspace}.${var.domain}"
-    description = "Load balancer for Kibana"
+    description = "${var.project}.${terraform.workspace}.${var.domain} Kibana Portal"
     subnets     = ["${var.vlan_subnets_private[terraform.workspace]}"]
 
     protocols = [
@@ -35,7 +35,7 @@ resource "ibm_lbaas" "kibana" {
 }
 resource "ibm_lbaas" "grafana" {
     name        = "grafana.${var.project}.${terraform.workspace}.${var.domain}"
-    description = "Load balancer for Grafana"
+    description = "${var.project}.${terraform.workspace}.${var.domain} Grafana Portal"
     subnets     = ["${var.vlan_subnets_private[terraform.workspace]}"]
 
     protocols = [
@@ -71,7 +71,7 @@ resource "ibm_lbaas" "grafana" {
 
 resource "ibm_lbaas" "project_lb" {
     name        = "${var.project}.${terraform.workspace}.${var.domain}"
-    description = "Load balancer for ${var.project}"
+    description = "${var.project}.${terraform.workspace}.${var.domain} Application"
     subnets     = ["${var.vlan_subnets_private[terraform.workspace]}"]
 
     protocols = [
