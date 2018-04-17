@@ -257,6 +257,22 @@ resource "ibm_security_group_rule" "node_pvt_docker_api" {
   remote_group_id   = "${ibm_security_group.bastion_pvt.id}"
   security_group_id = "${ibm_security_group.node_pvt.id}"
 }
+resource "ibm_security_group_rule" "node_pvt_lb_80" {
+  direction         = "ingress"
+  port_range_min    = 80
+  port_range_max    = 80
+  protocol          = "tcp"
+  remote_ip         = "0.0.0.0/0"
+  security_group_id = "${ibm_security_group.node_pvt.id}"
+}
+resource "ibm_security_group_rule" "node_pvt_lb_443" {
+  direction         = "ingress"
+  port_range_min    = 443
+  port_range_max    = 443
+  protocol          = "tcp"
+  remote_ip         = "0.0.0.0/0"
+  security_group_id = "${ibm_security_group.node_pvt.id}"
+}
 
 resource "ibm_security_group_rule" "node_pvt_e_ICMP" {
   direction         = "egress"

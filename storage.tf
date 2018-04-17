@@ -33,7 +33,7 @@ resource "ibm_storage_file" "logs" {
 resource "ibm_storage_file" "data" {
   type            = "Performance"
   datacenter      = "${var.datacenter}"
-  capacity        = 90
+  capacity        = 80
   iops            = 200
 
   allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0}"]

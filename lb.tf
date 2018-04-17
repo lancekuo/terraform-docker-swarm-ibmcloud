@@ -90,6 +90,13 @@ resource "ibm_lbaas" "project_lb" {
         backend_port          = 80
         load_balancing_method = "round_robin"
     },
+    {
+        frontend_protocol     = "HTTP"
+        frontend_port         = 443
+        backend_protocol      = "HTTP"
+        backend_port          = 443
+        load_balancing_method = "round_robin"
+    },
     ]
 
     server_instances = [
