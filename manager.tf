@@ -35,7 +35,7 @@ resource "ibm_compute_vm_instance" "manager" {
     inline = [
       " if [ ${count.index} -eq 0 ]; then sudo docker swarm init; else sudo docker swarm join ${ibm_compute_vm_instance.manager.0.ipv4_address_private}:2377 --token $(docker -H ${ibm_compute_vm_instance.manager.0.ipv4_address_private} swarm join-token -q manager); fi",
       "role-setup ${ibm_compute_vm_instance.nat.ipv4_address_private}",
-      " if [ ${count.index} -eq 1 ]; then git clone https://github.com/lancekuo/prometheus.git; fi",
+      " if [ ${count.index} -eq 1 ]; then git clone https://github.com/lancekuo/dfproxy.git;git clone https://github.com/lancekuo/prometheus.git; fi",
       " if [ ${count.index} -eq 2 ]; then git clone https://github.com/lancekuo/elk.git; fi",
       "echo ${self.hostname}",
     ]
