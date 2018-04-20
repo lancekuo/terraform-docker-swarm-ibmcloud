@@ -4,14 +4,6 @@ resource "ibm_lbaas" "kibana" {
     subnets     = ["${var.vlan_subnets_private[terraform.workspace]}"]
 
     protocols = [
-    # {
-    #     frontend_protocol     = "HTTPS"
-    #     frontend_port         = 443
-    #     backend_protocol      = "HTTP"
-    #     backend_port          = 80
-    #     load_balancing_method = "round_robin"
-    #     tls_certificate_id    = 11670
-    # },
     {
         frontend_protocol     = "HTTP"
         frontend_port         = 80
@@ -39,14 +31,6 @@ resource "ibm_lbaas" "grafana" {
     subnets     = ["${var.vlan_subnets_private[terraform.workspace]}"]
 
     protocols = [
-    # {
-    #     frontend_protocol     = "HTTPS"
-    #     frontend_port         = 443
-    #     backend_protocol      = "HTTP"
-    #     backend_port          = 80
-    #     load_balancing_method = "round_robin"
-    #     tls_certificate_id    = 11670
-    # },
     {
         frontend_protocol     = "HTTP"
         frontend_port         = 80
@@ -75,14 +59,6 @@ resource "ibm_lbaas" "project_lb" {
     subnets     = ["${var.vlan_subnets_private[terraform.workspace]}"]
 
     protocols = [
-    # {
-    #     frontend_protocol     = "HTTPS"
-    #     frontend_port         = 443
-    #     backend_protocol      = "HTTP"
-    #     backend_port          = 80
-    #     load_balancing_method = "round_robin"
-    #     tls_certificate_id    = 11670
-    # },
     {
         frontend_protocol     = "TCP"
         frontend_port         = 80
@@ -114,4 +90,3 @@ resource "ibm_lbaas" "project_lb" {
       },
     ]
 }
-
