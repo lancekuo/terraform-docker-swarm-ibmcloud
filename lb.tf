@@ -84,16 +84,16 @@ resource "ibm_lbaas" "project_lb" {
     #     tls_certificate_id    = 11670
     # },
     {
-        frontend_protocol     = "HTTP"
+        frontend_protocol     = "TCP"
         frontend_port         = 80
-        backend_protocol      = "HTTP"
+        backend_protocol      = "TCP"
         backend_port          = 80
         load_balancing_method = "round_robin"
     },
     {
-        frontend_protocol     = "HTTP"
+        frontend_protocol     = "TCP"
         frontend_port         = 443
-        backend_protocol      = "HTTP"
+        backend_protocol      = "TCP"
         backend_port          = 443
         load_balancing_method = "round_robin"
     },

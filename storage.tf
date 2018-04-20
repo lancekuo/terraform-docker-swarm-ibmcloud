@@ -30,6 +30,22 @@ resource "ibm_storage_file" "logs" {
     }
 }
 
+resource "ibm_storage_file" "certs" {
+  type            = "Endurance"
+  datacenter      = "${var.datacenter}"
+  capacity        = 20
+  iops            = 4
+
+  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0}"]
+  hourly_billing  = true
+
+  notes = "${var.project}.${terraform.workspace} - Certs"
+    lifecycle         = {
+        ignore_changes  = "*"
+        prevent_destroy = true
+    }
+}
+
 resource "ibm_storage_file" "data" {
   type            = "Performance"
   datacenter      = "${var.datacenter}"
