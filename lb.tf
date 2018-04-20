@@ -5,9 +5,9 @@ resource "ibm_lbaas" "kibana" {
 
     protocols = [
     {
-        frontend_protocol     = "HTTP"
+        frontend_protocol     = "TCP"
         frontend_port         = 80
-        backend_protocol      = "HTTP"
+        backend_protocol      = "TCP"
         backend_port          = 5601
         load_balancing_method = "round_robin"
     },
@@ -32,9 +32,9 @@ resource "ibm_lbaas" "grafana" {
 
     protocols = [
     {
-        frontend_protocol     = "HTTP"
+        frontend_protocol     = "TCP"
         frontend_port         = 80
-        backend_protocol      = "HTTP"
+        backend_protocol      = "TCP"
         backend_port          = 3000
         load_balancing_method = "round_robin"
     },
