@@ -6,3 +6,9 @@ keys/*
 !keys/.placeholder
 *.auto.tfvars
 !default.auto.tfvars.example
+
+connection.all.json
+connection.json
+*.bna
+post/fabric/config_generated/*
+!post/fabric/config_generated/.placeholder
