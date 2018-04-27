@@ -3,7 +3,7 @@ ibm_sl_username            = "USERNAME"
 ibm_sl_api_key             = "API_KET"
 
 datacenter                 = "tor01"
-vm_post_install_script_uri = "gist"
+vm_post_install_script_uri = ""
 domain                     = "test.com"
 project                    = "test-app"
 
@@ -45,18 +45,18 @@ vlans_private = {
     "trialnet"    = 1234
 }
 vlan_router_hostname_public = {
-    "development" = "fcr02a.${var.datacenter}"
-    "production"  = "fcr02a.${var.datacenter}"
-    "staging"     = "fcr01a.${var.datacenter}"
-    "testnet"     = "fcr02a.${var.datacenter}"
-    "trialnet"    = "fcr02a.${var.datacenter}"
+    "development" = "fcr02a"
+    "production"  = "fcr02a"
+    "staging"     = "fcr01a"
+    "testnet"     = "fcr02a"
+    "trialnet"    = "fcr02a"
 }
 vlan_router_hostname_private = {
-    "development" = "bcr02a.${var.datacenter}"
-    "production"  = "bcr02a.${var.datacenter}"
-    "staging"     = "bcr01a.${var.datacenter}"
-    "testnet"     = "bcr02a.${var.datacenter}"
-    "trialnet"    = "bcr02a.${var.datacenter}"
+    "development" = "bcr02a"
+    "production"  = "bcr02a"
+    "staging"     = "bcr01a"
+    "testnet"     = "bcr02a"
+    "trialnet"    = "bcr02a"
 }
 vlan_subnets_private = {
     "development" = 123456
