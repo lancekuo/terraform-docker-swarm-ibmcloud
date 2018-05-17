@@ -1,43 +1,38 @@
-# HealtheChain Terraform
+Terraform for IBM Cloud, creating your ready to use Docker Swarm in IBM Cloud.
 
-Here is the infrastructure code for HealthChain.
+## Customzied Image
 
-## Customzied AMI
+It uses [packer.io](https://www.packer.io/) and [builder](https://github.com/leonidlm/packer-builder-softlayer) to build our own base image in IBM Cloud.
 
-It comes in git-submodule and uses [packer.io](https://www.packer.io/) to build our own base image in AWS. The base path for this submodule is under `.packer-docker`
-
-Take a look at `docker.json` to see detailed configuration for the customized AMI. Briefly it takes ubnunt 16.10, docker ce_17.06, docker-machine, docker-compose and AWS CLI installed.
+Briefly it takes ubnunt 16.10, docker ce_18.03.1, docker-machine, docker-compose and customized script for set NAT route table up in post provisioning step. Also, it creates user `ubuntu`.
 
 `docker.options` enables `experimental=true` and `insecure-registry` to `10.0.0.0/8`， `192.0.0.0/8` and `172.0.0.0/8`
 
-```Mermaid
-
-```
-
 ## TODOS
 
-- terraform_provider_ibm lacks of completed support on AutoScale and Load Balancer operation.
+- terraform_provider_ibm@0.9.1 lacks of completed support on AutoScale and Load Balancer operation.
 
   - Lack of ability to tie a LBaaS to a AutoScale group
   - Lack of ability to attache Security group to LBaaS
+  - [ ] Replace NFS to local disk
 
 - Packer image
 
- - [ ] Add separated user name `ubuntu`
+   - [x] Add separated user name `ubuntu`
 
- - [ ] Move authorized_keys from root to `ubuntu`
+   - [ ] Move authorized_keys from root to `ubuntu`
 
- - [ ] Setup `sudoers` file
+   - [ ] Setup `sudoers` file
 
 ## Commands
 
-**Initialize Terraform**
+**Initialize Terraform@0.11.7**
  (one time job)
 ```bash
 terraform init
 terraform get
 ```
-**Generate SSH key for bastion and node instance**
+**Generate SSH key for difference roles**
  (one time job)
 ```bash
 ssh-keygen -q -t rsa -b 4096 -f keys/node -N ''
@@ -53,7 +48,7 @@ cp default.auto.tfvars.example default.auto.tfvars
 
 **Apply**
 ```bash
-terraform apply
+terraform apply -parallelism=2
 ```
 ## Storage
 
@@ -71,7 +66,7 @@ terraform import ibm_storage_file.metrics 40706115
 terraform import ibm_storage_file.logs 40706123
 terraform import ibm_storage_file.data 40646029
 terraform import ibm_storage_file.certs 41978125 #SSL
-https://control.softlayer.com/storage/file/43327299
+
 # Experiement
 terraform import ibm_storage_file.metrics 43327889
 terraform import ibm_storage_file.logs 43327905
@@ -97,7 +92,10 @@ Create the secret as following in docker swarm.
 ## Prometheus and Grafana
 Those docker-compose file brings you the completed stack of prometheus and Grafana.
 
+You should be able to find the file at `Manager-1`
+
 ### Command
+
 **Build your docker image**
 ```bash
 cd prometheus
@@ -113,6 +111,8 @@ The best dashboard that fits to us is [Docker Swarm & Container Overview](https:
 ## ELK Stack
 
 Those docker-compose file brings you the completed stack of ELK 6.2.
+
+You should be able to find the file at `Manager-2`
 
 ### Command
 **Build your docker image**

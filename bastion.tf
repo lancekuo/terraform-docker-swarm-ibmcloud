@@ -29,7 +29,7 @@ resource "ibm_compute_vm_instance" "bastion" {
   image_id                   = "${data.ibm_compute_image_template.docker_img.id}"
   datacenter                 = "${var.datacenter}"
   local_disk                 = false
-  network_speed              = 100
+  network_speed              = 1000
   cores                      = 2
   memory                     = 2048
   post_install_script_uri    = "${var.vm_post_install_script_uri}"
