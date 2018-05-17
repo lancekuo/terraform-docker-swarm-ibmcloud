@@ -38,11 +38,12 @@ resource "ibm_compute_vm_instance" "manager" {
       " if [ ${count.index} -eq 1 ]; then git clone https://github.com/lancekuo/prometheus.git;mkdir /opt/prometheus;mkdir /opt/elasticsearch; fi",
       " if [ ${count.index} -eq 2 ]; then git clone https://github.com/lancekuo/elk.git; fi",
       "mkdir /opt/kafka-log; mkdir /opt/orderer; mkdir /opt/peer; mkdir /opt/app-postgres",
-      "TMP='__HOST____PATH__    nfs4    rw,noatime'; for i in '/fabric/kafka /opt/kafka-log' '/fabric/orderer /opt/orderer' '/fabric/peer /opt/peer' '/data/postgresql /opt/app-postgres'; do echo $$TMP|sed -e 's@__HOST__@${ibm_storage_file.data.mountpoint}@g'| sed -e \"s@__PATH__@$$i@g\">>/etc/fstab; mount $$i;done",
+      "TMP='__HOST____PATH__    nfs4    rw,noatime'; for i in '/fabric/kafka /opt/kafka-log' '/fabric/orderer /opt/orderer' '/fabric/peer /opt/peer' '/data/postgresql /opt/app-postgres'; do echo $$TMP|sed -e 's@__HOST__@${ibm_storage_file.data.mountpoint}@g'| sed -e \"s@__PATH__@$$i@g\">>/etc/fstab; mount $$(echo $$i|cut -d' ' -f 2);done",
       "echo ${self.hostname}",
       "echo \"export APP_STORAGE_HOST=${ibm_storage_file.data.hostname};export APP_VOLUME=${ibm_storage_file.data.volumename}/data01;export METRIC_STORAGE_HOST=${ibm_storage_file.metrics.hostname};export METRIC_VOLUME=${ibm_storage_file.metrics.volumename}/data01;export LOG_STORAGE_HOST=${ibm_storage_file.logs.hostname};export LOG_VOLUME=${ibm_storage_file.logs.volumename}/data01;export CERTS_STORAGE_HOST=${ibm_storage_file.certs.hostname};export CERTS_VOLUME=${ibm_storage_file.certs.volumename}/data01\" > /etc/profile.d/storage_path_env.sh ",
     ]
   }
 
   tags = ["${terraform.workspace}", "manager", "swarm"]
+  depends_on = ["null_resource.storage_trigger"]
 }

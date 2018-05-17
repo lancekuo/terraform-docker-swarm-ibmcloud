@@ -71,6 +71,12 @@ terraform import ibm_storage_file.metrics 40706115
 terraform import ibm_storage_file.logs 40706123
 terraform import ibm_storage_file.data 40646029
 terraform import ibm_storage_file.certs 41978125 #SSL
+https://control.softlayer.com/storage/file/43327299
+# Experiement
+terraform import ibm_storage_file.metrics 43327889
+terraform import ibm_storage_file.logs 43327905
+terraform import ibm_storage_file.certs 43327299
+# terraform import ibm_storage_file.data 40646029
 ```
 
 Remove from state 
