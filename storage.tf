@@ -4,7 +4,7 @@ resource "ibm_storage_file" "metrics" {
   capacity        = 50
   iops            = 4
 
-  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0}"]
+  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0.subnet}"]
   hourly_billing  = true
 
   notes = "${var.project}.${terraform.workspace} - MetricsStorage"
@@ -20,7 +20,7 @@ resource "ibm_storage_file" "logs" {
   capacity        = 50
   iops            = 4
 
-  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0}"]
+  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0.subnet}"]
   hourly_billing  = true
 
   notes = "${var.project}.${terraform.workspace} - AppLogsStorage"
@@ -36,7 +36,7 @@ resource "ibm_storage_file" "certs" {
   capacity        = 20
   iops            = 4
 
-  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0}"]
+  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0.subnet}"]
   hourly_billing  = true
 
   notes = "${var.project}.${terraform.workspace} - Certs"
@@ -52,7 +52,7 @@ resource "ibm_storage_file" "data" {
   capacity        = 80
   iops            = 200
 
-  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0}"]
+  allowed_subnets = ["${data.ibm_network_vlan.private.subnets.0.subnet}"]
   hourly_billing  = true
 
   notes = "${var.project}.${terraform.workspace} - Application Storage"

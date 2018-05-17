@@ -216,7 +216,7 @@ resource "ibm_security_group_rule" "manager_services_kibana" {
   port_range_min    = 5601
   port_range_max    = 5601
   protocol          = "tcp"
-  remote_ip         = "${data.ibm_network_vlan.private.subnets.0}"
+  remote_ip         = "${data.ibm_network_vlan.private.subnets.0.subnet}"
   security_group_id = "${ibm_security_group.manager_services.id}"
 }
 resource "ibm_security_group_rule" "manager_services_grafana" {
@@ -224,7 +224,7 @@ resource "ibm_security_group_rule" "manager_services_grafana" {
   port_range_min    = 3000
   port_range_max    = 3000
   protocol          = "tcp"
-  remote_ip         = "${data.ibm_network_vlan.private.subnets.0}"
+  remote_ip         = "${data.ibm_network_vlan.private.subnets.0.subnet}"
   security_group_id = "${ibm_security_group.manager_services.id}"
 }
 

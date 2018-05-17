@@ -12,19 +12,14 @@ resource "ibm_lbaas" "kibana" {
         load_balancing_method = "round_robin"
     },
     ]
-
-    server_instances = [
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.manager.0.ipv4_address_private}"
-      },
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.manager.1.ipv4_address_private}"
-      },
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.manager.2.ipv4_address_private}"
-      },
-    ]
 }
+resource "ibm_lbaas_server_instance_attachment" "kibana" {
+    count              = "${var.manager_count}"
+    private_ip_address = "${element(ibm_compute_vm_instance.manager.*.ipv4_address_private, count.index)}"
+    weight             = 50
+    lbaas_id           = "${ibm_lbaas.kibana.id}"
+}
+
 resource "ibm_lbaas" "grafana" {
     name        = "grafana.${var.project}.${terraform.workspace}.${var.domain}"
     description = "${var.project}.${terraform.workspace}.${var.domain} Grafana Portal"
@@ -39,21 +34,15 @@ resource "ibm_lbaas" "grafana" {
         load_balancing_method = "round_robin"
     },
     ]
-
-    server_instances = [
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.manager.0.ipv4_address_private}"
-      },
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.manager.1.ipv4_address_private}"
-      },
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.manager.2.ipv4_address_private}"
-      },
-    ]
+}
+resource "ibm_lbaas_server_instance_attachment" "grafana" {
+    count              = "${var.manager_count}"
+    private_ip_address = "${element(ibm_compute_vm_instance.manager.*.ipv4_address_private, count.index)}"
+    weight             = 50
+    lbaas_id           = "${ibm_lbaas.grafana.id}"
 }
 
-resource "ibm_lbaas" "project_lb" {
+resource "ibm_lbaas" "project" {
     name        = "${var.project}.${terraform.workspace}.${var.domain}"
     description = "${var.project}.${terraform.workspace}.${var.domain} Application"
     subnets     = ["${var.vlan_subnets_private[terraform.workspace]}"]
@@ -74,19 +63,10 @@ resource "ibm_lbaas" "project_lb" {
         load_balancing_method = "round_robin"
     },
     ]
-
-    server_instances = [
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.node.0.ipv4_address_private}"
-      },
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.node.1.ipv4_address_private}"
-      },
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.node.2.ipv4_address_private}"
-      },
-      {
-        "private_ip_address" = "${ibm_compute_vm_instance.node.3.ipv4_address_private}"
-      },
-    ]
+}
+resource "ibm_lbaas_server_instance_attachment" "project" {
+    count              = "${var.node_count}"
+    private_ip_address = "${element(ibm_compute_vm_instance.node.*.ipv4_address_private, count.index)}"
+    weight             = 50
+    lbaas_id           = "${ibm_lbaas.project.id}"
 }
