@@ -145,6 +145,14 @@ resource "ibm_security_group_rule" "bastion_pvt_e_TCP" {
   security_group_id = "${ibm_security_group.bastion_pvt.id}"
 }
 
+resource "ibm_security_group_rule" "bastion_pvt_e_UDP" {
+  direction         = "egress"
+  port_range_min    = 1
+  port_range_max    = 65535
+  protocol          = "udp"
+  remote_ip         = "0.0.0.0/0"
+  security_group_id = "${ibm_security_group.bastion_pvt.id}"
+}
 # resource "ibm_network_interface_sg_attachment" "bastion_pvt" {
 #     security_group_id    = "${ibm_security_group.bastion_pvt.id}"
 #     network_interface_id = "${ibm_compute_vm_instance.bastion.private_interface_id}"
