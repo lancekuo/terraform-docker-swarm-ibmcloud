@@ -33,8 +33,8 @@ resource "ibm_compute_vm_instance" "manager" {
 
   provisioner "remote-exec" {
     inline = [
-      " if [ ${count.index} -eq 0 ]; then sudo docker swarm init;git clone https://github.com/lancekuo/dfproxy.git; else sudo docker swarm join ${ibm_compute_vm_instance.manager.0.ipv4_address_private}:2377 --token $(docker -H ${ibm_compute_vm_instance.manager.0.ipv4_address_private} swarm join-token -q manager); fi",
       "role-setup ${ibm_compute_vm_instance.nat.ipv4_address_private}",
+      " if [ ${count.index} -eq 0 ]; then sudo docker swarm init;git clone https://github.com/lancekuo/dfproxy.git; else sudo docker swarm join ${ibm_compute_vm_instance.manager.0.ipv4_address_private}:2377 --token $(docker -H ${ibm_compute_vm_instance.manager.0.ipv4_address_private} swarm join-token -q manager); fi",
       " if [ ${count.index} -eq 1 ]; then git clone https://github.com/lancekuo/prometheus.git;mkdir /opt/prometheus;mkdir /opt/elasticsearch; fi",
       " if [ ${count.index} -eq 2 ]; then git clone https://github.com/lancekuo/elk.git; fi",
       "mkdir /opt/kafka-log; mkdir /opt/orderer; mkdir /opt/peer; mkdir /opt/app-postgres",
