@@ -5,6 +5,9 @@ output "Bastion" {
 output "Manager" {
   value = "${ibm_compute_vm_instance.manager.*.ipv4_address_private}"
 }
-output "test" {
-  value = "${ibm_lbaas.project_lb.vip}"
+output "vlan_SUBNETS" {
+  value = "${data.ibm_network_vlan.private.subnets.0.subnet}"
+}
+output "Project_VIP" {
+  value = "${ibm_lbaas.project.vip}"
 }
