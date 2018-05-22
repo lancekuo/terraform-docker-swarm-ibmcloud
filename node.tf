@@ -23,11 +23,11 @@ resource "ibm_compute_vm_instance" "node" {
 
   connection {
     bastion_host        = "${ibm_compute_vm_instance.bastion.ipv4_address}"
-    bastion_user        = "root"
+    bastion_user        = "ubuntu"
     bastion_private_key = "${file("${path.root}${var.rsa_key_bastion["private_key_path"]}")}"
 
     type        = "ssh"
-    user        = "root"
+    user        = "ubuntu"
     host        = "${self.ipv4_address_private}"
     private_key = "${file("${path.root}${var.rsa_key_node["private_key_path"]}")}"
   }
