@@ -6,7 +6,7 @@ provider "ibm" {
 }
 
 data "ibm_compute_image_template" "docker_img" {
-  name = "docker-base-2018-03"
+  name = "docker-base-2018-05"
 }
 
 data "ibm_network_vlan" "private" {

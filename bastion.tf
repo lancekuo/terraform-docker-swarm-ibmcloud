@@ -37,6 +37,7 @@ resource "ibm_compute_vm_instance" "bastion" {
   private_vlan_id            = "${data.ibm_network_vlan.private.id}"
   private_security_group_ids = ["${ibm_security_group.bastion_pvt.id}"]
   public_security_group_ids  = ["${ibm_security_group.bastion_pub.id}"]
+  user_metadata              = "#!/bin/bash\n/usr/bin/ubuntu-harden ubuntu"
 }
 
 resource "ibm_compute_vm_instance" "nat" {
@@ -54,6 +55,7 @@ resource "ibm_compute_vm_instance" "nat" {
   private_vlan_id            = "${data.ibm_network_vlan.private.id}"
   private_security_group_ids = ["${ibm_security_group.nat_pvt.id}"]
   public_security_group_ids  = ["${ibm_security_group.nat_pub.id}"]
+  user_metadata              = "#!/bin/bash\n/usr/bin/ubuntu-harden ubuntu"
 
   connection {
     bastion_host        = "${ibm_compute_vm_instance.bastion.ipv4_address}"
